@@ -1,5 +1,6 @@
 package com.example.TaskManagementSystem.config;
 
+import com.example.TaskManagementSystem.security.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -8,7 +9,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.example.TaskManagementSystem.security.JwtAuthenticationFiler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -17,10 +17,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class SecurityConfig {
 
-    private final JwtAuthenticationFiler jwtAuthenticationFiler;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    public SecurityConfig(JwtAuthenticationFiler jwtAuthenticationFiler) {
-        this.jwtAuthenticationFiler = jwtAuthenticationFiler;
+    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
@@ -36,7 +36,7 @@ public class SecurityConfig {
                         //tat ca cac request con lai bat buoc pahi co token
                                 .anyRequest().authenticated()
                 )
-        .addFilterBefore(jwtAuthenticationFiler, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
         //tat xframe neu khong spring security chan
         return http.build();

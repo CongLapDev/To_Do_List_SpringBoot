@@ -349,7 +349,7 @@ org.h2.message.DbException: Wrong user name or password [28000-232]
 	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
 	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
 	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
-	at com.example.TaskManagementSystem.security.JwtAuthenticationFiler.doFilterInternal(JwtAuthenticationFiler.java:54)
+	at com.example.TaskManagementSystem.security.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFiler.java:54)
 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
 	at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:374)
 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107)

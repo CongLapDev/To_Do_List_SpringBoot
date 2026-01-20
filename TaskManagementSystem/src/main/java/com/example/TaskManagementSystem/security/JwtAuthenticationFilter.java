@@ -16,12 +16,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-public class JwtAuthenticationFiler extends OncePerRequestFilter {
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
 // oncePerRequestFilter la 1 abtract class do spring cung cap no dam bao moi requset chi di qua 1 lan
     private final JwtTokenProvider tokenProvider;
     private final UserDetailsService userDetailsService;
 
-    public JwtAuthenticationFiler(JwtTokenProvider tokenProvider, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtTokenProvider tokenProvider, UserDetailsService userDetailsService) {
         this.tokenProvider = tokenProvider;
         this.userDetailsService = userDetailsService;
     }
@@ -56,7 +56,7 @@ public class JwtAuthenticationFiler extends OncePerRequestFilter {
         private String getTokenFromRequest(HttpServletRequest request) {
             String bearerToken = request.getHeader("Authorization");
             //token thuong co dang bearer abcxyz...
-            if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer")) {
+            if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
                 return bearerToken.substring(7);   //cat bo chu bearer de lay chuoi token
             }
         return null;
