@@ -32,4 +32,28 @@ public class JwtTokenProvider {
                 .compact(); // nen thanh chuoi string
 
     }
+
+    //lay username tu trong token
+    public String getUsernameFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJwt(token)
+                .getBody()
+                .getSubject();
+    }
+
+    //kiem tra token co hop le khong
+    public boolean validateToken(String token) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(key)
+                    .build()
+                    .parseClaimsJwt(token);
+            return true;
+        } catch (Exception e) {
+            //token het han, sai chu ki, loi format
+            return false;
+        }
+    }
 }

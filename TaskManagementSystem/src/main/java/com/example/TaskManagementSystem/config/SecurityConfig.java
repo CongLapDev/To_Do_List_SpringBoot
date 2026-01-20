@@ -8,13 +8,20 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter.XFrameOptionsMode;
+import com.example.TaskManagementSystem.security.JwtAuthenticationFiler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration //bao cho spring day la file cau hinh
 @EnableWebSecurity //kich hoat tinh nang bao mat web
 
-public class SercurityConfig {
+public class SecurityConfig {
+
+    private final JwtAuthenticationFiler jwtAuthenticationFiler;
+
+    public SecurityConfig(JwtAuthenticationFiler jwtAuthenticationFiler) {
+        this.jwtAuthenticationFiler = jwtAuthenticationFiler;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,11 +31,14 @@ public class SercurityConfig {
                 //cau hinh quyen truy cap
                 .authorizeHttpRequests(auth -> auth
                 //cho phep tat ca cac request truy cap ma khong can dang nhap
-                                .requestMatchers("/h2-console/**").permitAll()
-                                .anyRequest().permitAll()
+                                .requestMatchers("/h2-console/**",
+                                                            "/api/auth/**").permitAll()
+                        //tat ca cac request con lai bat buoc pahi co token
+                                .anyRequest().authenticated()
                 )
-        .headers(headers -> headers.frameOptions(frame -> frame
-                .sameOrigin()) );
+        .addFilterBefore(jwtAuthenticationFiler, UsernamePasswordAuthenticationFilter.class);
+        http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
+        //tat xframe neu khong spring security chan
         return http.build();
 
 
