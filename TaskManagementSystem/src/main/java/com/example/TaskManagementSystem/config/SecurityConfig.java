@@ -38,7 +38,7 @@ public class SecurityConfig {
                 )
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
         http.headers(headers -> headers.frameOptions(frame -> frame.disable()));
-        //tat xframe neu khong spring security chan
+        //tats xframe neu khong spring security chan
         return http.build();
 
 
