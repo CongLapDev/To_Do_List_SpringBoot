@@ -43,4 +43,39 @@ public class TaskService {
         return taskRepository.findByUser(user); //chi lay task cua ho
     }   //lay het tu DB
 
+    //Sua Task
+    public Task updateTask(Long id, Task taskRequest) {
+        //tim task theo id
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task khong ton tai"));
+
+        //lay user hien tai
+        User currentUser = getCurrentUser(); // lay user hien tai dang dang nhap gan vao currentUser
+
+        //Kiem tra quyen so huu, id dang nhap khac id nguoi tao task -> block
+        if(!task.getUser().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Ban khong co quyen sua task nay");
+        }
+        //cap nhat thong tin
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(task.getDescription());
+        task.setStatus(task.getStatus());
+
+        return taskRepository.save(task);
+    }
+
+    //Xoa Task
+    public void deleteTask(Long id) {
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task khong ton tai"));
+
+        User currentUser = getCurrentUser();
+
+        //Kiem tra quyen so huu
+        if(!task.getUser().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Ban khong co quyen xoa task nay");
+        }
+        taskRepository.delete(task);
+    }
+
 }
