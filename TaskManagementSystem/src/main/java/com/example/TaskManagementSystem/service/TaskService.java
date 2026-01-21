@@ -40,6 +40,11 @@ public class TaskService {
     //ham lay tat ca task
     public List<Task> getAllTasks() {
         User user = getCurrentUser();
+
+        //kiem tra xem co role ADMIN khong
+        if(user.getRoles().contains("ADMIN")) {
+            return taskRepository.findAll(); //admin thay tat ca
+        }
         return taskRepository.findByUser(user); //chi lay task cua ho
     }   //lay het tu DB
 
