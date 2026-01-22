@@ -12,7 +12,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
     //Tao key bi mat de ki len Token
-    //Chi Server giu key nay, key nay de trong application.properties hoac .env
+    //Chi Server giu key nay, key nay de trong application.yml hoac .env
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     //thoi gian het han token 86400000 ms = 1 ngay
